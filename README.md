@@ -41,7 +41,8 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
     string private contractState;  // 合約狀態的 JSON 字符串
 ```
 * 方法
-```    constructor() public {
+```
+    constructor() public {
         owner = msg.sender;  // 在合約部署時將部署者設置為合約所有者
         gameCount = 0;
     }
