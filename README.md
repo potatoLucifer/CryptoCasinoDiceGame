@@ -41,12 +41,16 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
     string private contractState;  // 合約狀態的 JSON 字符串
 ```
 * 方法
+  * 建構
 ```
     constructor() public {
         owner = msg.sender;  // 在合約部署時將部署者設置為合約所有者
         gameCount = 0;
     }
-    
+```
+
+
+```
     function deposit() payable public {
         require(depositor1 == address(0) || depositor2 == address(0), "已達到最大存款數量。");  // 檢查是否已達到最大存款數量
 
