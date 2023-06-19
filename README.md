@@ -17,7 +17,7 @@
 
 3.How blockchain is revolutionizing the gaming industry?
 
-{
+
 
 pragma solidity ^0.6.2;
 
@@ -25,7 +25,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
 
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/math/SafeMath.sol";
 
-contract Wallet {
+contract Wallet  {
     using Address for address payable;
     using SafeMath for uint256;
 
@@ -61,4 +61,3 @@ contract Wallet {
 
     function uint256ToString(uint256 value) private pure returns (string memory) {}
  }
-}
