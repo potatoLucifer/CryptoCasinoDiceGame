@@ -28,16 +28,17 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
 ```
 * 變數
 ```
-using Address for address payable;
-using SafeMath for uint256;
-uint256 private gameCount;
-address payable public owner;// 合約所有者的地址
-uint256 public lastDiceResult;// 最後一次擲骰子的結果
-address payable public depositor1; // 第一個存款者的錢包地址
-address payable public depositor2; // 第二個存款者的錢包地址
-uint256 public depositor1Amount;// 存款者1的存款金額
-uint256 public depositor2Amount;// 存款者2的存款金額
-string private contractState;// 合約狀態的 JSON 字符串
+    using Address for address payable;
+    using SafeMath for uint256;
+
+    uint256 private gameCount;
+    address payable public owner;  // 合約所有者的地址
+    uint256 public lastDiceResult;  // 最後一次擲骰子的結果
+    address payable public depositor1;  // 第一個存款者的錢包地址
+    address payable public depositor2;  // 第二個存款者的錢包地址
+    uint256 public depositor1Amount;  // 存款者1的存款金額
+    uint256 public depositor2Amount;  // 存款者2的存款金額
+    string private contractState;  // 合約狀態的 JSON 字符串
 ```
 * 方法
 ```
