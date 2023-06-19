@@ -176,6 +176,4 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
         }
         return string(buffer);
     }
-    ```
-
- 
+  ```
