@@ -9,6 +9,7 @@
 賭博是不好，但官方真的很賺錢
 
 參考資料:
+
 1.The Impact of Blockchain Technology on Casino Sites
 
 2.Blockchain Bets — The Future of Gambling: How $BCB is Changing the Game
