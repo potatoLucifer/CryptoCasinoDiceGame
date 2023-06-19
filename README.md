@@ -28,7 +28,6 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
 contract Wallet  {
     using Address for address payable;
     using SafeMath for uint256;
-
     uint256 private gameCount;
     address payable public owner;
     uint256 public lastDiceResult;
