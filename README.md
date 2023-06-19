@@ -17,6 +17,7 @@
 
 3.How blockchain is revolutionizing the gaming industry?
 
+{
 
 pragma solidity ^0.6.2;
 
@@ -59,4 +60,5 @@ contract Wallet {
     function addressToString(address addr) private pure returns (string memory) {}
 
     function uint256ToString(uint256 value) private pure returns (string memory) {}
+ }
 }
