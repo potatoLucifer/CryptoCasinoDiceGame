@@ -122,7 +122,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
     function viewContractState() public view returns (string memory) {
         return contractState;
     }
-   ```
+```
   * 副函數
 ```
     // 輔助函數：生成合約狀態的 JSON 字符串
