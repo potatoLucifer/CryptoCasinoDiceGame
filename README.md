@@ -48,7 +48,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
         gameCount = 0;
     }
 ```
- * 主函數
+  * 主函數
 ```
     function deposit() payable public {
         require(depositor1 == address(0) || depositor2 == address(0), "已達到最大存款數量。");  // 檢查是否已達到最大存款數量
@@ -123,7 +123,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
         return contractState;
     }
 ```
- * 副函數
+  * 副函數
 ```
     // 輔助函數：生成合約狀態的 JSON 字符串
     function generateContractState() private view returns (string memory) {
