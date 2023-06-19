@@ -174,4 +174,4 @@
         }
         return string(buffer);
     }
- 
+ ||謝謝老師和同學觀看||
