@@ -124,7 +124,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
     }
    ```
   * 副函數
-   ```
+```
     // 輔助函數：生成合約狀態的 JSON 字符串
     function generateContractState() private view returns (string memory) {
         string memory state = string(abi.encodePacked(
@@ -176,4 +176,4 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
         }
         return string(buffer);
     }
-  ```
+ ```
