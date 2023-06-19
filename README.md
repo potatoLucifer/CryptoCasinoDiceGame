@@ -21,13 +21,13 @@
 ```
 ## 智能合約
 * 引用
-```
+  ```
 pragma solidity ^0.6.2;
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/utils/Address.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/math/SafeMath.sol";
-```
+
 * 變數
-```
+  ```
     using Address for address payable;
     using SafeMath for uint256;
 
@@ -39,7 +39,7 @@ import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contr
     uint256 public depositor1Amount;  // 存款者1的存款金額
     uint256 public depositor2Amount;  // 存款者2的存款金額
     string private contractState;  // 合約狀態的 JSON 字符串
-```
+
 * 方法
   * 建構
     ```
