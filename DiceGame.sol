@@ -1,4 +1,5 @@
 pragma solidity ^0.6.2;
+
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/utils/Address.sol";
 import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/math/SafeMath.sol";
 
@@ -7,93 +8,91 @@ contract Wallet {
     using SafeMath for uint256;
 
     uint256 private gameCount;
-    address payable public owner;  // 合約所有者的地址
-    uint256 public lastDiceResult;  // 最後一次擲骰子的結果
-    address payable public depositor1;  // 第一個存款者的錢包地址
-    address payable public depositor2;  // 第二個存款者的錢包地址
-    uint256 public depositor1Amount;  // 存款者1的存款金額
-    uint256 public depositor2Amount;  // 存款者2的存款金額
-    string private contractState;  // 合約狀態的 JSON 字符串
+    address payable public owner;
+    uint256 public lastDiceResult;
+    address payable public depositor1;
+    address payable public depositor2;
+    uint256 public depositor1Amount;
+    uint256 public depositor2Amount;
+    string private contractState;
 
     constructor() public {
-        owner = msg.sender;  // 在合約部署時將部署者設置為合約所有者
+        owner = msg.sender;
         gameCount = 0;
     }
     
     function deposit() payable public {
-        require(depositor1 == address(0) || depositor2 == address(0), "已達到最大存款數量。");  // 檢查是否已達到最大存款數量
+        require(depositor1 == address(0) || depositor2 == address(0), "已達到最大存款數量。");
 
         if (depositor1 == address(0)) {
-            depositor1 = msg.sender;  // 將第一個存款者的錢包地址設置為呼叫者的地址
-            depositor1Amount = msg.value;  // 設置存款者1的存款金額
+            depositor1 = msg.sender;
+            depositor1Amount = msg.value;
         } else {
-            depositor2 = msg.sender;  // 將第二個存款者的錢包地址設置為呼叫者的地址
-            depositor2Amount = msg.value;  // 設置存款者2的存款金額
+            depositor2 = msg.sender;
+            depositor2Amount = msg.value;
             if (depositor1Amount != depositor2Amount){
                 depositor1.transfer(depositor1Amount);
                 depositor2.transfer(depositor2Amount);
-                depositor1 = address(0);  // 清除第一個存款者的地址
-                depositor2 = address(0);  // 清除第二個存款者的地址
-                depositor1Amount = 0;  // 清除存款者1的存款金額
-                depositor2Amount = 0;  // 清除存款者2的存款金額
+                depositor1 = address(0);
+                depositor2 = address(0);
+                depositor1Amount = 0;
+                depositor2Amount = 0;
             }
         }
     }
     
     function rollDice() public {
-        require(msg.sender == owner, "只有合約所有者可以擲骰子並清除存款者地址。");  // 檢查是否為合約所有者
-        require(address(this).balance > 0, "沒有可提取的餘額。");  // 檢查合約餘額是否大於零
+        require(msg.sender == owner, "只有合約所有者可以擲骰子並清除存款者地址。");
+        require(address(this).balance > 0, "沒有可提取的餘額。");
 
-        lastDiceResult = randomDiceRoll();  // 呼叫隨機擲骰子函數獲取結果
+        lastDiceResult = randomDiceRoll();
 
         if (lastDiceResult >= 1 && lastDiceResult <= 3) {
-            uint256 amountToTransfer = address(this).balance * 9 / 10;  // 轉移90%的餘額給存款者1
+            uint256 amountToTransfer = address(this).balance * 9 / 10;
             depositor1.transfer(amountToTransfer);
-            owner.transfer(address(this).balance);  // 轉移剩餘的10%給合約所有者
+            owner.transfer(address(this).balance);
         } else if (lastDiceResult >= 4 && lastDiceResult <= 6) {
-            uint256 amountToTransfer = address(this).balance * 9 / 10;  // 轉移90%的餘額給存款者2
+            uint256 amountToTransfer = address(this).balance * 9 / 10;
             depositor2.transfer(amountToTransfer);
-            owner.transfer(address(this).balance);  // 轉移剩餘的10%給合約所有者
+            owner.transfer(address(this).balance);
         }
-
-        clearDepositors();  // 清除存款者的地址和存款金額
+        clearDepositors();
     }
 
     function refundDeposits() public {
-        require(msg.sender == owner, "只有合約所有者可以退款。");  // 檢查是否為合約所有者
-        require(depositor1 != address(0) || depositor2 != address(0), "沒有存款者可以退款。");  // 檢查是否有存款者
+        require(msg.sender == owner, "只有合約所有者可以退款。");
+        require(depositor1 != address(0) || depositor2 != address(0), "沒有存款者可以退款。");
 
         if (depositor1 != address(0)) {
-            depositor1.transfer(depositor1Amount);  // 將存款者1的金額退還給存款者1
+            depositor1.transfer(depositor1Amount);
         }
 
         if (depositor2 != address(0)) {
-            depositor2.transfer(depositor2Amount);  // 將存款者2的金額退還給存款者2
+            depositor2.transfer(depositor2Amount);
         }
-        depositor1 = address(0);  // 清除第一個存款者的地址
-        depositor2 = address(0);  // 清除第二個存款者的地址
-        depositor1Amount = 0;  // 清除存款者1的存款金額
-        depositor2Amount = 0;  // 清除存款者2的存款金額
+        depositor1 = address(0);
+        depositor2 = address(0);
+        depositor1Amount = 0;
+        depositor2Amount = 0;
     }
 
     function clearDepositors() private {
         gameCount++;
-        contractState = generateContractState();  // 生成合約狀態的 JSON 字符串並儲存
-        depositor1 = address(0);  // 清除第一個存款者的地址
-        depositor2 = address(0);  // 清除第二個存款者的地址
-        depositor1Amount = 0;  // 清除存款者1的存款金額
-        depositor2Amount = 0;  // 清除存款者2的存款金額
+        contractState = generateContractState();
+        depositor1 = address(0);
+        depositor2 = address(0);
+        depositor1Amount = 0;
+        depositor2Amount = 0;
     }
     
     function randomDiceRoll() private view returns (uint256) {
-        return (uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % 6) + 1;  // 使用區塊信息生成偽隨機數，模擬骰子擲出結果
+        return (uint256(keccak256(abi.encodePacked(block.timestamp, block.difficulty))) % 6) + 1;
     }
 
     function viewContractState() public view returns (string memory) {
         return contractState;
     }
 
-    // 輔助函數：生成合約狀態的 JSON 字符串
     function generateContractState() private view returns (string memory) {
         string memory state = string(abi.encodePacked(
             '{',
@@ -110,7 +109,6 @@ contract Wallet {
         return state;
     }
 
-    // 輔助函數：將地址轉換為字符串
     function addressToString(address addr) private pure returns (string memory) {
         bytes32 value = bytes32(uint256(addr));
         bytes memory alphabet = "0123456789abcdef";
@@ -125,7 +123,6 @@ contract Wallet {
         return string(str);
     }
 
-    // 輔助函數：將 uint256 轉換為字符串
     function uint256ToString(uint256 value) private pure returns (string memory) {
         if (value == 0) {
             return "0";
