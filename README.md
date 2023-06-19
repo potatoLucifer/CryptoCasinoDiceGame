@@ -19,14 +19,14 @@
 
 ## 智能合約
 * 引用
-  ```python
+  ```c
   pragma solidity ^0.6.2;
   import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/utils/Address.sol";
   import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.4.0/contracts/math/SafeMath.sol";
   ```
 
 * 變數
-  ```python
+  ```c
     using Address for address payable;
     using SafeMath for uint256;
 
@@ -41,14 +41,14 @@
     ```
 * 方法
   * 建構
-    ```python
+    ```c
     constructor() public {
         owner = msg.sender;  // 在合約部署時將部署者設置為合約所有者
         gameCount = 0;
     }
     ```
   * 主函數
-    ```python
+    ```c
     function deposit() payable public {
         require(depositor1 == address(0) || depositor2 == address(0), "已達到最大存款數量。");  // 檢查是否已達到最大存款數量
 
@@ -122,7 +122,7 @@
         return contractState;
     }
   * 副函數
-    ```python
+    ```c
     // 輔助函數：生成合約狀態的 JSON 字符串
     function generateContractState() private view returns (string memory) {
         string memory state = string(abi.encodePacked(
