@@ -26,7 +26,7 @@
   ```
 
 * 變數
-  ```c
+  ```c++
     using Address for address payable;
     using SafeMath for uint256;
 
